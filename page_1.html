@@ -7,39 +7,39 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            text-align: justify; /* Выравнивание по ширине для всего body */
-            line-height: 1.6; /* Улучшение читаемости */
+            text-align: justify;
+            line-height: 1.6;
         }
         h1 {
             color: #333;
-            text-align: center; /* Заголовок по центру для красоты */
+            text-align: center;
             margin-bottom: 30px;
         }
         ul {
             list-style: none;
             padding: 0;
-            margin: 0 auto; /* Центрирование списка */
-            max-width: 800px; /* Ограничение ширины для лучшего чтения */
+            margin: 0 auto;
+            max-width: 800px;
         }
         li {
             margin-bottom: 15px;
             font-size: 1.1em;
             padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0; /* Разделитель между пунктами */
+            border-bottom: 1px solid #f0f0f0;
         }
         li:last-child {
-            border-bottom: none; /* Убираем разделитель у последнего пункта */
+            border-bottom: none;
         }
         li strong {
             display: inline-block;
-            width: 400px; /* Увеличиваем ширину для выравнивания */
+            width: 400px;
             color: #555;
             font-weight: 600;
         }
         .back-link {
             margin-top: 30px;
             display: block;
-            text-align: center; /* Центрируем ссылку */
+            text-align: center;
             padding: 15px;
         }
 
@@ -49,18 +49,18 @@
             padding: 30px;
             background-color: #ffffff;
             border-radius: 8px;
-            max-width: 800px; /* Ограничение ширины */
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
         
         .feedback-section h2 {
-            text-align: center; /* Центрируем заголовок формы */
+            text-align: center;
             margin-bottom: 15px;
         }
         
         .feedback-section p {
-            text-align: center; /* Центрируем описание формы */
+            text-align: center;
             margin-bottom: 25px;
             color: #666;
         }
@@ -83,7 +83,7 @@
             font-weight: 600;
             color: #473434;
             width: auto;
-            text-align: left; /* Метки полей оставляем по левому краю */
+            text-align: left;
         }
 
         .form-group input, 
@@ -109,7 +109,7 @@
             font-size: 14px;
             margin-top: 5px;
             display: block;
-            text-align: left; /* Сообщения об ошибках по левому краю */
+            text-align: left;
         }
 
         input.error, textarea.error {
@@ -175,17 +175,17 @@
         <h1>Общая информация</h1>
 
         <ul>
-            <li><strong>Учебное заведение</strong>: ВГУ        </li>
-            <li><strong>Факультет</strong>:         Компьютерных Наук</li>
-            <li><strong>Страна</strong>:        Россия</li>
-            <li><strong>Город</strong>:         Воронеж</li>
-            <li><strong>Направление</strong>:       Прикладная информатика</li>
-            <li><strong>Профиль</strong>:       Экономическая сфера</li>
-            <li><strong>Курс</strong>:      1</li>
-            <li><strong>Дата рождения</strong>:         22.02.2007</li>
-            <li><strong>Почта для обратной связи</strong>:      korotkikhstepan@gmail.com</li>
-            <li><strong>Личный тг-аккаунт</strong>:       @katsuoda</li>
-            <li><strong>Git-Profile</strong>:       darkkenneth</li>
+            <li><strong>Учебное заведение</strong>: ВГУ</li>
+            <li><strong>Факультет</strong>: Компьютерных Наук</li>
+            <li><strong>Страна</strong>: Россия</li>
+            <li><strong>Город</strong>: Воронеж</li>
+            <li><strong>Направление</strong>: Прикладная информатика</li>
+            <li><strong>Профиль</strong>: Экономическая сфера</li>
+            <li><strong>Курс</strong>: 1</li>
+            <li><strong>Дата рождения</strong>: 22.02.2007</li>
+            <li><strong>Почта для обратной связи</strong>: korotkikhstepan@gmail.com</li>
+            <li><strong>Личный тг-аккаунт</strong>: @katsuoda</li>
+            <li><strong>Git-Profile</strong>: darkkenneth</li>
         </ul>
     </div>
     
@@ -196,6 +196,18 @@
             <p>В случае, если telegram будет замедлен</p>
             
             <form id="feedbackForm" class="feedback-form" novalidate>
+                <div class="form-group">
+                    <label for="name">Имя *</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        placeholder="Ваше имя" 
+                        required
+                    >
+                    <span class="error-message" id="nameError"></span>
+                </div>
+                
                 <div class="form-group">
                     <label for="email">Электронная почта *</label>
                     <input 
@@ -227,7 +239,7 @@
             </form>
             
             <div id="successMessage" class="success-message">
-                Спасибо! Ваше сообщение успешно отправлено.
+                <!-- Сообщение будет генерироваться динамически -->
             </div>
         </div>
     </section>
@@ -239,13 +251,19 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('feedbackForm');
+            const nameInput = document.getElementById('name');
             const emailInput = document.getElementById('email');
             const commentInput = document.getElementById('comment');
+            const nameError = document.getElementById('nameError');
             const emailError = document.getElementById('emailError');
             const commentError = document.getElementById('commentError');
             const successMessage = document.getElementById('successMessage');
 
             // Функции валидации
+            function validateName(name) {
+                return name.trim().length >= 2;
+            }
+
             function validateEmail(email) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 return emailRegex.test(email);
@@ -255,7 +273,20 @@
                 return comment.length >= 10;
             }
 
-            // Валидация в реальном времени
+            // Валидация в реальном времени для имени
+            nameInput.addEventListener('input', function() {
+                const name = nameInput.value.trim();
+                
+                if (!name) {
+                    showError(nameInput, nameError, 'Поле имени обязательно для заполнения');
+                } else if (!validateName(name)) {
+                    showError(nameInput, nameError, 'Имя должно содержать минимум 2 символа');
+                } else {
+                    showSuccess(nameInput, nameError);
+                }
+            });
+
+            // Валидация в реальном времени для email
             emailInput.addEventListener('input', function() {
                 const email = emailInput.value.trim();
                 
@@ -268,6 +299,7 @@
                 }
             });
 
+            // Валидация в реальном времени для комментария
             commentInput.addEventListener('input', function() {
                 const comment = commentInput.value.trim();
                 
@@ -297,10 +329,20 @@
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
                 
+                const name = nameInput.value.trim();
                 const email = emailInput.value.trim();
                 const comment = commentInput.value.trim();
                 
                 let isValid = true;
+
+                // Валидация имени
+                if (!name) {
+                    showError(nameInput, nameError, 'Поле имени обязательно для заполнения');
+                    isValid = false;
+                } else if (!validateName(name)) {
+                    showError(nameInput, nameError, 'Имя должно содержать минимум 2 символа');
+                    isValid = false;
+                }
 
                 // Валидация email
                 if (!email) {
@@ -321,14 +363,23 @@
                 }
 
                 if (isValid) {
-                    // Здесь обычно отправка данных на сервер
-                    console.log('Данные для отправки:', { email, comment });
+                    // Создаем персонализированное сообщение об успехе
+                    const personalizedMessage = `Привет, ${name}! Спасибо за ваш комментарий: "${comment}". Мы свяжемся с Вами по почте: ${email}.`;
+                    
+                    // Устанавливаем сообщение в элемент
+                    successMessage.textContent = personalizedMessage;
                     
                     // Показываем сообщение об успехе
                     successMessage.style.display = 'block';
+                    
+                    // Логируем данные для отправки
+                    console.log('Данные для отправки:', { name, email, comment });
+                    
+                    // Сбрасываем форму
                     form.reset();
                     
                     // Убираем классы valid после сброса
+                    nameInput.classList.remove('valid', 'error');
                     emailInput.classList.remove('valid', 'error');
                     commentInput.classList.remove('valid', 'error');
                     
@@ -340,6 +391,10 @@
             });
 
             // Сброс ошибок при фокусе
+            nameInput.addEventListener('focus', function() {
+                nameInput.classList.remove('error', 'valid');
+            });
+
             emailInput.addEventListener('focus', function() {
                 emailInput.classList.remove('error', 'valid');
             });
@@ -352,3 +407,7 @@
 
 </body>
 </html>
+
+</body>
+</html>
+
